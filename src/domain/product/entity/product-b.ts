@@ -1,4 +1,5 @@
 import Entity from "../../@shared/entity/entity.abstract";
+import NotificationError from "../../@shared/notification/notification.error";
 import ProductInterface from "./product.interface";
 
 export default class ProductB extends Entity implements ProductInterface {
@@ -11,6 +12,10 @@ export default class ProductB extends Entity implements ProductInterface {
     this._name = name;
     this._price = price;
     this.validate();
+
+    if (this.notification.hasErrors()) {
+      throw new NotificationError(this.notification.getErrors());
+    }
   }
 
   get name(): string {
